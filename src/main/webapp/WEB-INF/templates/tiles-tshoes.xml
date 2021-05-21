@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+  <definition name="template.tshoes" template="/WEB-INF/jsp/templates/tshoes_template.jsp">
+    <put-attribute name="header" value="/WEB-INF/jsp/components/tshoes/header.jsp" />
+    <put-attribute name="leftbar" value="/WEB-INF/jsp/components/tshoes/leftbar.jsp" />
+    <put-attribute name="content" value="" />
+    <put-attribute name="footer" value="/WEB-INF/jsp/components/tshoes/footer.jsp" />
+  </definition>
+  
+  <definition name="tshoes.index" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/index.jsp" />
+  </definition>
+  
+  <definition name="tshoes.login" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/login.jsp" />
+  </definition>
+  
+  <definition name="tshoes.register" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/register.jsp" />
+  </definition>
+  
+  <definition name="tshoes.contact" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/contact.jsp" />
+  </definition>
+  
+  <definition name="tshoes.detail" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/details.jsp" />
+  </definition>
+  
+  <definition name="tshoes.product" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/products.jsp" />
+  </definition>
+  
+  <definition name="tshoes.checkout" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/checkout.jsp" />
+  </definition>
+  
+  <definition name="tshoes.cart" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/cart.jsp" />
+  </definition>
+  
+  <definition name="tshoes.order" extends="template.tshoes">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/tshoes/order.jsp" />
+  </definition>
+  
+</tiles-definitions>

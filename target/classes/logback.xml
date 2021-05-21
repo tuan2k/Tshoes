@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true">
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n
+			</Pattern>
+		</layout>
+	</appender>
+	<property name="LOG_PATH" value="E:/Log" />
+	<property name="LOG_ARCHIVE" value="${LOG_PATH}/application" />
+	<timestamp key="myTimestamp" datePattern="yyyyMMdd_HH" />
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_ARCHIVE}/%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>31</maxHistory>
+			<totalSizeCap></totalSizeCap>
+		</rollingPolicy>
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{5} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+	<logger name="edu.vinaenter" level="war" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
+</configuration>

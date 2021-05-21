@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+<tiles-definitions>
+  <definition name="template.admin" template="/WEB-INF/jsp/templates/admin_template.jsp">
+    <put-attribute name="header" value="/WEB-INF/jsp/components/admin/header.jsp" />
+    <put-attribute name="leftbar" value="/WEB-INF/jsp/components/admin/leftbar.jsp" />
+    <put-attribute name="content" value="" />
+    <put-attribute name="footer" value="/WEB-INF/jsp/components/admin/footer.jsp" />
+  </definition>
+  
+  <definition name="template.login" template="/WEB-INF/jsp/templates/admin_template.jsp">
+   	<put-attribute name="header" value="" />
+    <put-attribute name="leftbar" value="" />
+    <put-attribute name="content" value="" />
+    <put-attribute name="footer" value="" />
+  </definition>
+  
+  <definition name="admin.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/index.jsp" />
+  </definition>
+  
+   <definition name="admin.user.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/user/index.jsp" />
+  </definition>
+  
+   <definition name="admin.user.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/user/add.jsp" />
+  </definition>
+  
+  <definition name="admin.user.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/user/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.cat.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cat/index.jsp" />
+  </definition>
+  
+   <definition name="admin.cat.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cat/add.jsp" />
+  </definition>
+  
+  <definition name="admin.cat.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cat/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.contact.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/contact/index.jsp" />
+  </definition>
+  
+   <definition name="admin.contact.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/contact/add.jsp" />
+  </definition>
+  
+  <definition name="admin.contact.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/contact/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.land.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/land/index.jsp" />
+  </definition>
+  
+   <definition name="admin.land.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/land/add.jsp" />
+  </definition>
+  
+  <definition name="admin.land.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/land/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.auth.login" extends="template.login">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/auth/login.jsp" />
+  </definition>
+  
+   <definition name="error.403" extends="template.login">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/error/403.jsp" />
+  </definition>
+  
+  <definition name="admin.color.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/color/index.jsp" />
+  </definition>
+  
+   <definition name="admin.color.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/color/add.jsp" />
+  </definition>
+  
+  <definition name="admin.color.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/color/edit.jsp" />
+  </definition>
+  
+   <definition name="admin.size.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/size/index.jsp" />
+  </definition>
+  
+   <definition name="admin.size.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/size/add.jsp" />
+  </definition>
+  
+  <definition name="admin.size.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/size/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.order.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/order/index.jsp" />
+  </definition>
+  
+   <definition name="admin.order.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/order/add.jsp" />
+  </definition>
+  
+  <definition name="admin.order.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/order/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.order.view" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/order/view.jsp" />
+  </definition>
+  
+  <definition name="admin.cart.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cart/index.jsp" />
+  </definition>
+  
+   <definition name="admin.cart.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cart/add.jsp" />
+  </definition>
+  
+  <definition name="admin.cart.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/cart/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.product.index" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/product/index.jsp" />
+  </definition>
+  
+   <definition name="admin.product.add" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/product/add.jsp" />
+  </definition>
+  
+  <definition name="admin.product.edit" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/product/edit.jsp" />
+  </definition>
+  
+  <definition name="admin.product.view" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/product/view.jsp" />
+  </definition>
+  
+   <definition name="error.403" extends="template.login">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/error/403.jsp" />
+  </definition>
+  
+  <definition name="error">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/error/errorPage.jsp" />
+  </definition>
+  
+  
+</tiles-definitions>
