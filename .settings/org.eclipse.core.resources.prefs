@@ -10,6 +10,7 @@ encoding//src/main/java/edu/vinaenter/controllers/admin/AdminUserController.java
 encoding//src/main/resources/messages/messages.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/views/admin/cat/add.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/views/admin/cat/index.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/views/admin/chart/chart.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/views/tshoes/contact.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/views/tshoes/details.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/views/tshoes/index.jsp=UTF-8

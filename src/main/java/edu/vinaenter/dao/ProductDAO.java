@@ -202,10 +202,36 @@ public class ProductDAO {
 		String sql = "select count(*) as count from products";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
+	
+	public int totalRowCategory(int cid) {
+		String sql = "select count(*) as count from products where cat_id = "+cid;
+		return jdbcTemplate.queryForObject(sql,Integer.class);
+	}
+	
+	public int totalRowSearch(String search,int cat_id) {
+		String sql = "select count(*) as count from products where cat_id="+cat_id+" and name like '%"
+				+search+"%'";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	public int totalRowSearch(String search) {
+		String sql = "select count(*) as count from products where name like '%"
+				+search+"%'";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 
-	public List<Product> getBySearch(String search,int offset,int totalPage) {
-		String sql = "SELECT * FROM products where name like '%"+search+"%'"
-				+ " or description like '%"+search+"%' limit ?,?";
+	public List<Product> getBySearch(String search,int cat_id,int offset,int totalPage) {
+		String sql = "SELECT p.id as pid," + 
+				"	  p.name," + 
+				"     p.price," + 
+				"     p.number," + 
+				"     p.description," + 
+				"     p.color," + 
+				"     p.size," + 
+				"     p.image," +
+				"	  p.cat_id "	
+				+ "FROM products p INNER JOIN categories c ON p.cat_id = c.id where c.id = ? and p.name like '%"
+					+search+"%'" +" limit ?,?";
 		return jdbcTemplate.query(sql,new ResultSetExtractor<List<Product>>() {
 			@Override
 			public List<Product> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -214,7 +240,39 @@ public class ProductDAO {
 				while(rs.next()) {
 					Product c = new Product();
 					ArrayList<Integer> arrImage = new ArrayList<Integer>();
-					c.setId(rs.getInt("id"));
+					c.setId(rs.getInt("pid"));
+					c.setName(rs.getString("name"));
+					c.setPrice(rs.getInt("price"));
+					c.setNumber(rs.getInt("number"));
+					c.setDescription(rs.getString("description"));
+					c.setCat_id(rs.getInt("cat_id"));
+					String image = rs.getString("image");
+					String arr[] = image.split(",");
+					for (int i=0;i<=arr.length-1;i++) {
+						arrImage.add(Integer.parseInt(arr[i]));
+					}
+					c.setArImage(arrImage);
+					c.setSize(rs.getString("size"));
+					c.setColor(rs.getString("color"));
+					arrProduct.add(c);
+				}
+				return arrProduct;
+			}
+		},cat_id,offset,totalPage);
+	}
+	
+	public List<Product> getBySearch(String search,int offset,int totalPage) {
+		String sql = "select * from products where name like '%"
+					+search+"%'" +" or description like '%"+search+"%' limit ?,?";
+		return jdbcTemplate.query(sql,new ResultSetExtractor<List<Product>>() {
+			@Override
+			public List<Product> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				ArrayList<Product> arrProduct = new ArrayList<Product>();
+				while(rs.next()) {
+					Product c = new Product();
+					ArrayList<Integer> arrImage = new ArrayList<Integer>();
+					c.setId(rs.getInt("pid"));
 					c.setName(rs.getString("name"));
 					c.setPrice(rs.getInt("price"));
 					c.setNumber(rs.getInt("number"));
@@ -266,10 +324,35 @@ public class ProductDAO {
 		},cat_id);
 	}
 
-	public int totalRowSearch(String search) {
-		String sql = "select count(*) as count from products where name like '%"
-				+search+"%'"+"or description like '%"+search+"%'";
-		return jdbcTemplate.queryForObject(sql, Integer.class);
+	public List<Product> getByCatPagination(int cid, int offset, int totalPage) {
+		String sql = "SELECT * FROM products where cat_id= ? limit ?,?";
+		return jdbcTemplate.query(sql, new ResultSetExtractor<List<Product>>(){
+			@Override
+			public List<Product> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				ArrayList<Product> arrProduct = new ArrayList<Product>();
+				while(rs.next()) {
+					Product c = new Product();
+					ArrayList<Integer> arrImage = new ArrayList<Integer>();
+					c.setId(rs.getInt("id"));
+					c.setName(rs.getString("name"));
+					c.setPrice(rs.getInt("price"));
+					c.setNumber(rs.getInt("number"));
+					c.setDescription(rs.getString("description"));
+					c.setCat_id(rs.getInt("cat_id"));
+					String image = rs.getString("image");
+					String arr[] = image.split(",");
+					for (int i=0;i<=arr.length-1;i++) {
+						arrImage.add(Integer.parseInt(arr[i]));
+					}
+					c.setArImage(arrImage);
+					c.setSize(rs.getString("size"));
+					c.setColor(rs.getString("color"));
+					arrProduct.add(c);
+				}
+				return arrProduct;
+			}
+		},cid,offset,totalPage);
 	}
 
 }

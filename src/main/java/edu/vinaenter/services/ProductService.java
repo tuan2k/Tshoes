@@ -50,6 +50,10 @@ public class ProductService implements ICRUDService<Product> {
 		return productDAO.validateUpdate(Product);
 	}
 
+	public List<Product> getBySearch(String search,int cat_id,int offset,int totalPage) {
+		return productDAO.getBySearch(search,cat_id,offset,totalPage);
+	}
+	
 	public List<Product> getBySearch(String search,int offset,int totalPage) {
 		return productDAO.getBySearch(search,offset,totalPage);
 	}
@@ -65,9 +69,21 @@ public class ProductService implements ICRUDService<Product> {
 	public int getTotalProduct() {
 		return productDAO.totalRow();
 	}
+	
+	public int getTotalRowCategory(int cid) {
+		return productDAO.totalRowCategory(cid);
+	}
 
+	public int totalRowSearch(String search,int cat_id) {
+		return productDAO.totalRowSearch(search,cat_id);
+	}
+	
 	public int totalRowSearch(String search) {
 		return productDAO.totalRowSearch(search);
+	}
+
+	public List<Product> getByCatPagination(int cid,int offset, int totalPage) {
+		return productDAO.getByCatPagination(cid,offset, totalPage);
 	}
 
 }

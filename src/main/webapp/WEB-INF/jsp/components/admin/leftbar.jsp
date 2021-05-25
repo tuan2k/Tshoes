@@ -18,8 +18,8 @@
 				Kích cỡ</a></li>
 		<li><a href="${pageContext.request.contextPath}/admin/order/index"><i class="glyphicon glyphicon-book"></i>
 				Đơn đặt hàng</a></li>
-		<li><a href="${pageContext.request.contextPath}/admin/cart/index"><i class="glyphicon glyphicon-book"></i>
-				Giỏ hàng</a></li>
+		<li><a href="${pageContext.request.contextPath}/admin/chart"><i class="glyphicon glyphicon-book"></i>
+				Thống kê doanh thu</a></li>
 	</ul>
 	<!-- /.nav-bar -->
 </div>

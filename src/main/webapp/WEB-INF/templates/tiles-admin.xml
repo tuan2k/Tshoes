@@ -146,6 +146,10 @@
     <put-attribute name="content" value="/WEB-INF/jsp/views/admin/product/view.jsp" />
   </definition>
   
+  <definition name="admin.chart" extends="template.admin">
+    <put-attribute name="content" value="/WEB-INF/jsp/views/admin/chart/chart.jsp" />
+  </definition>
+  
    <definition name="error.403" extends="template.login">
     <put-attribute name="content" value="/WEB-INF/jsp/views/error/403.jsp" />
   </definition>

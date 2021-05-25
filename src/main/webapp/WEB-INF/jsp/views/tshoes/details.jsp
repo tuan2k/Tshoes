@@ -3,37 +3,70 @@
 	pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/components/taglib.jsp"%>
 <style>
-@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import
+	url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 /*reset css*/
-div,label{margin:0;padding:0;}
-body{margin:20px;}
-h1{font-size:1.5em;margin:10px;}
+div, label {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 20px;
+}
+
+h1 {
+	font-size: 1.5em;
+	margin: 10px;
+}
 /****** Style Star Rating Widget *****/
-#rating{border:none;float:left;}
-#rating>input{display:none;}/*ẩn input radio - vì chúng ta đã có label là GUI*/
-#rating>label:before{margin:5px;font-size:1.25em;font-family:FontAwesome;display:inline-block;content:"\f005";}/*1 ngôi sao*/
-#rating>.half:before{content:"\f089";position:absolute;}/*0.5 ngôi sao*/
-#rating>label{color:#ddd;float:right;}/*float:right để lật ngược các ngôi sao lại đúng theo thứ tự trong thực tế*/
+#rating {
+	border: none;
+	float: left;
+}
+
+#rating>input {
+	display: none;
+} /*ẩn input radio - vì chúng ta đã có label là GUI*/
+#rating>label:before {
+	margin: 5px;
+	font-size: 1.25em;
+	font-family: FontAwesome;
+	display: inline-block;
+	content: "\f005";
+} /*1 ngôi sao*/
+#rating>.half:before {
+	content: "\f089";
+	position: absolute;
+} /*0.5 ngôi sao*/
+#rating>label {
+	color: #ddd;
+	float: right;
+}
+	/*float:right để lật ngược các ngôi sao lại đúng theo thứ tự trong thực tế*/
 /*thêm màu cho sao đã chọn và các ngôi sao phía trước*/
-#rating>input:checked~label,
-#rating:not(:checked)>label:hover, 
-#rating:not(:checked)>label:hover~label{color:#FFD700;}
+#rating>input:checked ~label, #rating:not (:checked )>label:hover,
+	#rating:not (:checked )>label:hover ~label{
+	color: #FFD700;
+}
 /* Hover vào các sao phía trước ngôi sao đã chọn*/
-#rating>input:checked+label:hover,
-#rating>input:checked~label:hover,
-#rating>label:hover~input:checked~label,
-#rating>input:checked~label:hover~label{color:#FFED85;}
+#rating>input:checked+label:hover, #rating>input:checked ~label:hover,
+	#rating>label:hover ~input:checked ~label, #rating>input:checked ~label:hover
+	~label{
+	color: #FFED85;
+}
 
 .comment-left {
-    width:  820px;
-    float:  left;
+	width: 820px;
+	float: left;
 }
-.comment-left >h2 {
-    font-size: 22px;
-    color: #2e2e2e;
-    text-transform:  uppercase;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 10px;
+
+.comment-left>h2 {
+	font-size: 22px;
+	color: #2e2e2e;
+	text-transform: uppercase;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
 }
 </style>
 <script
@@ -118,8 +151,14 @@ h1{font-size:1.5em;margin:10px;}
 
 									</select>
 								</ul>
+								<%
+									if (session.getAttribute("userLogin") != null){
+								%>
 								<a href="javascript:void(0)" onclick="addToCart(${product.id})">Add
 									to Cart</a>
+								<% }else { %>
+								<a href="${pageContext.request.contextPath}/login" >Login to buy</a>
+								<% } %>
 								<ul class="product-share">
 									<h3>All so Share On</h3>
 									<ul>
@@ -175,42 +214,47 @@ h1{font-size:1.5em;margin:10px;}
 							<div id="loadComment">
 								<h3>Customer Reviews</h3>
 								<c:choose>
-								<c:when test="${ not empty listComments }">
-								<c:forEach items="${listComments}" var="comment">
+									<c:when test="${ not empty listComments }">
+										<c:forEach items="${listComments}" var="comment">
 								Người đăng:
 								<c:set var="c" value="1"></c:set>
-								<c:forEach items="${listUsers }" var="u">
-								<c:if test="${comment.user_id==u.id  && c==1}"> ${u.fullname}
+											<c:forEach items="${listUsers }" var="u">
+												<c:if test="${comment.user_id==u.id  && c==1}"> ${u.fullname}
 								<c:set var="c" value="2"></c:set>
-								</c:if>
-								</c:forEach>
+												</c:if>
+											</c:forEach>
 								-------Ngày đăng: ${comment.date}
-								<br> <br>
-								<div id="rating">
-									<input type="radio" id="star5"<c:if test="${ comment.rate== 5 }">checked</c:if>  readonly/> <label
-									class="full" for="star5" title="Awesome - 5 stars"></label> <input
-									type="radio" id="star4" <c:if test="${ comment.rate== 4 }">checked</c:if> /> <label
-									class="full" for="star4" title="Pretty good - 4 stars"></label> <input
-									type="radio" id="star3" <c:if test="${ comment.rate== 3 }">checked</c:if>/> <label
-									class="full" for="star3" title="Meh - 3 stars"></label> <input
-									type="radio" id="star2" <c:if test="${ comment.rate== 2 }">checked</c:if> /> <label
-									class="full" for="star2" title="Kinda bad - 2 stars"></label> <input
-									type="radio" id="star1"<c:if test="${ comment.rate== 1 }">checked</c:if>/> <label
-									class="full" for="star1" title="Sucks big time - 1 star"></label>
-								</div>
-								<div class="form-group">
-								<br> <br>
-								Bình luận: 
-								<input value = "${comment.content }" readonly/>
-								</div>
-								<hr>
-								</c:forEach>
-								</c:when>
-								<c:otherwise>
-								<p>There are no customer reviews yet.</p>
-								</c:otherwise>
+								<br>
+											<br>
+											<div id="rating">
+												<input type="radio" id="star5"
+													<c:if test="${ comment.rate== 5 }">checked</c:if> readonly />
+												<label class="full" for="star5" title="Awesome - 5 stars"></label>
+												<input type="radio" id="star4"
+													<c:if test="${ comment.rate== 4 }">checked</c:if> /> <label
+													class="full" for="star4" title="Pretty good - 4 stars"></label>
+												<input type="radio" id="star3"
+													<c:if test="${ comment.rate== 3 }">checked</c:if> /> <label
+													class="full" for="star3" title="Meh - 3 stars"></label> <input
+													type="radio" id="star2"
+													<c:if test="${ comment.rate== 2 }">checked</c:if> /> <label
+													class="full" for="star2" title="Kinda bad - 2 stars"></label>
+												<input type="radio" id="star1"
+													<c:if test="${ comment.rate== 1 }">checked</c:if> /> <label
+													class="full" for="star1" title="Sucks big time - 1 star"></label>
+											</div>
+											<div class="form-group">
+												<br> <br> Bình luận: <input
+													value="${comment.content }" readonly />
+											</div>
+											<hr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<p>There are no customer reviews yet.</p>
+									</c:otherwise>
 								</c:choose>
-								
+
 							</div>
 						</div>
 					</div>
@@ -227,87 +271,91 @@ h1{font-size:1.5em;margin:10px;}
 		<div class="comment-p">
 			<div class="comment-left">
 				<h2>Đánh giá và nhận xét</h2>
-				<form action="comment" method="post" enctype="multipart/form-data"  onsubmit="return check_field(0)">
-				<div id="rating">
-					<span>Chọn đánh giá của bạn:</span>
-					<input type="radio" id="star5" name="rating" value="5" checked /> <label
-						class="full" for="star5" title="Awesome - 5 stars"></label> <input
-						type="radio" id="star4" name="rating" value="4" /> <label
-						class="full" for="star4" title="Pretty good - 4 stars"></label> <input
-						type="radio" id="star3" name="rating" value="3" /> <label
-						class="full" for="star3" title="Meh - 3 stars"></label> <input
-						type="radio" id="star2" name="rating" value="2" /> <label
-						class="full" for="star2" title="Kinda bad - 2 stars"></label> <input
-						type="radio" id="star1" name="rating" value="1" /> <label
-						class="full" for="star1" title="Sucks big time - 1 star"></label>
-				</div>
-				<br> <br>
-				<div>
-				<textarea name="user_content" placeholder="Nội dung bình luận"  id="comment" rows="5" cols="50"></textarea>
-				 </div>
-				 <input type="button" onclick="addComment(<%= u.getId() %>,${product.id })" value="Gửi bình luận" class="btn btn-green" />
+				<form action="comment" method="post" enctype="multipart/form-data"
+					onsubmit="return check_field(0)">
+					<div id="rating">
+						<span>Chọn đánh giá của bạn:</span> <input type="radio" id="star5"
+							name="rating" value="5" checked /> <label class="full"
+							for="star5" title="Awesome - 5 stars"></label> <input
+							type="radio" id="star4" name="rating" value="4" /> <label
+							class="full" for="star4" title="Pretty good - 4 stars"></label> <input
+							type="radio" id="star3" name="rating" value="3" /> <label
+							class="full" for="star3" title="Meh - 3 stars"></label> <input
+							type="radio" id="star2" name="rating" value="2" /> <label
+							class="full" for="star2" title="Kinda bad - 2 stars"></label> <input
+							type="radio" id="star1" name="rating" value="1" /> <label
+							class="full" for="star1" title="Sucks big time - 1 star"></label>
+					</div>
+					<br> <br>
+					<div>
+						<textarea name="user_content" placeholder="Nội dung bình luận"
+							id="comment" rows="5" cols="50"></textarea>
+					</div>
+					<input type="button"
+						onclick="addComment(<%= u.getId() %>,${product.id })"
+						value="Gửi bình luận" class="btn btn-green" />
 				</form>
 			</div>
 		</div>
 		<% } %>
-				<!--- start-similar-products--->
-				<div class="similar-products">
-					<div class="similar-products-left">
-						<h3>SIMILAR PRODUCTS</h3>
-						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-							sed do eiusmod tempor incididunt ut labore et dolore magna
-							aliqua.</p>
-					</div>
-					<c:choose>
-					<c:when test="${ not empty similarProducts }">
+		<!--- start-similar-products--->
+		<div class="similar-products">
+			<div class="similar-products-left">
+				<h3>SIMILAR PRODUCTS</h3>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+					do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+			<c:choose>
+				<c:when test="${ not empty similarProducts }">
 					<c:forEach items="${similarProducts }" var="sproduct">
-					<c:if test="${ product.id != sproduct.id }">
-					<div class="similar-products-right">
-						<div id="owl-demo" class="owl-carousel">
-							<div class="item">
-								<div class="product-grid fade sproduct-grid">
-									<div class="product-pic">
-										<a href="#"><img
-											src="${pageContext.request.contextPath}/resources/files/${sproduct.string}"
-											title="product-name" /></a>
-										<p>
-											<a href="#"><small>Nike</small> HYPERVENOM <small>Phantom</small>
-												FG</a> <span>Men's Firm-Ground Football Boot</span>
-										</p>
-									</div>
-									<div class="product-info">
-										<div class="product-info-cust">
-											<a href="${pageContext.request.contextPath}/detail/${sproduct.id}">Details</a>
+						<c:if test="${ product.id != sproduct.id }">
+							<div class="similar-products-right">
+								<div id="owl-demo" class="owl-carousel">
+									<div class="item">
+										<div class="product-grid fade sproduct-grid">
+											<div class="product-pic">
+												<a href="#"><img
+													src="${pageContext.request.contextPath}/resources/files/${sproduct.string}"
+													title="product-name" /></a>
+												<p>
+													<a href="#"><small>Nike</small> HYPERVENOM <small>Phantom</small>
+														FG</a> <span>Men's Firm-Ground Football Boot</span>
+												</p>
+											</div>
+											<div class="product-info">
+												<div class="product-info-cust">
+													<a
+														href="${pageContext.request.contextPath}/detail/${sproduct.id}">Details</a>
+												</div>
+												<div class="product-info-price">
+													<a href="#">&#163; ${sproduct.price}</a>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="more-product-info">
+												<span> </span>
+											</div>
 										</div>
-										<div class="product-info-price">
-											<a href="#">&#163; ${sproduct.price}</a>
-										</div>
-										<div class="clear"></div>
-									</div>
-									<div class="more-product-info">
-										<span> </span>
 									</div>
 								</div>
+								<!----//End-img-cursual---->
 							</div>
-						</div>
-						<!----//End-img-cursual---->
-					</div>
-					</c:if>
-					
+						</c:if>
+
 					</c:forEach>
-					</c:when>
-					</c:choose>
-					
-					<div class="clear"></div>
-				</div>
-				<!--- //End-similar-products--->
-			</div>
+				</c:when>
+			</c:choose>
+
+			<div class="clear"></div>
 		</div>
-		<div class="clear"></div>
-		<!--//vertical Tabs-->
-		<!----//product-rewies---->
-		<!---//End-product-details--->
+		<!--- //End-similar-products--->
 	</div>
+</div>
+<div class="clear"></div>
+<!--//vertical Tabs-->
+<!----//product-rewies---->
+<!---//End-product-details--->
+</div>
 </div>
 <!---- start-bottom-grids---->
 <div class="bottom-grids">
@@ -488,7 +536,7 @@ h1{font-size:1.5em;margin:10px;}
 					});
 </script>
 <script
-	src="${pageContext.request.contextPath}/resources/tshoes/js/easyResponsiveTabs.js"
+	src="${pageContext.request.contextPath }/resources/tshoes/js/easyResponsiveTabs.js"
 	type="text/javascript"></script>
 <script type="text/javascript">
 	$(document).ready(function() {

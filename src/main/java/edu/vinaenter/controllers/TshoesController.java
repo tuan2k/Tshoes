@@ -120,25 +120,63 @@ public class TshoesController {
 		model.addAttribute("listproducts", listProductsP);
 		return "tshoes.index";
 	}
+	
+	@GetMapping("/cat/{id}")
+	public String cat(Model model, HttpServletRequest request,@PathVariable(required = false) Integer page
+			,@PathVariable(required = false) Integer id) {
+		int totalPage = PageUtil.getTotalRow(productService.getTotalRowCategory(id));
+		if ( page == null) {
+			page = 1;
+		}
+		if (page < 1 || page > totalPage) {
+			page = 1 ;
+		}
+		List<Product> listProductsP = productService.getByCatPagination(id,PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
+		List<Integer> imageId = new ArrayList<Integer>();
+		//List<Product> listProducts = productService.getAll();
+		List<Category> listCategoryG = categoryService.getByGrand();
+		List<Category> listCategoryP = categoryService.getByParent();
+		List<Category> listCategoryC = categoryService.getByChild();
+		for (Product p : listProductsP) {
+			imageId = p.getArImage();
+			Image img = imageService.getById(imageId.get(0));
+			p.setString(img.getName());
+		}
+		model.addAttribute("currentPage",page);
+		model.addAttribute("totalPage",totalPage);
+		model.addAttribute("listCategoryG",listCategoryG);
+		model.addAttribute("listCategoryP",listCategoryP);
+		model.addAttribute("listCategoryC",listCategoryC);
+		model.addAttribute("listproducts", listProductsP);
+		return "tshoes.index";
+	}
 
-//	@GetMapping("/home")
-//	public String index(HttpServletRequest request, Model model) {
-//		List<Integer> imageId = new ArrayList<Integer>();
-//		List<Category> listCategoryG = categoryService.getByGrand();
-//		List<Category> listCategoryP = categoryService.getByParent();
-//		List<Category> listCategoryC = categoryService.getByChild();
-//		List<Product> listProducts = productService.getAll();
-//		for (Product p : listProducts) {
-//			imageId = p.getArImage();
-//			Image img = imageService.getById(imageId.get(0));
-//			p.setString(img.getName());
-//		}
-//		model.addAttribute("listCategoryG",listCategoryG);
-//		model.addAttribute("listCategoryP",listCategoryP);
-//		model.addAttribute("listCategoryC",listCategoryC);
-//		model.addAttribute("listproducts", listProducts);
-//		return "tshoes.index";
-//	}
+	@PostMapping("/search")
+	public String index(HttpServletRequest request, Model model,@RequestParam("cat_id") Integer cat_id,
+			@RequestParam("catname") String catname,@PathVariable(required = false) Integer page) {
+		List<Integer> imageId = new ArrayList<Integer>();
+		List<Category> listCategoryG = categoryService.getByGrand();
+		List<Category> listCategoryP = categoryService.getByParent();
+		List<Category> listCategoryC = categoryService.getByChild();
+		int totalPage = PageUtil.getTotalRow(productService.totalRowSearch(catname,cat_id));
+		if ( page == null) {
+			page = 1;
+		}
+		if (page < 1 || page > totalPage) {
+			page = 1 ;
+		}
+		List<Product> listProducts = productService.getBySearch(catname,cat_id,PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
+		for (Product p : listProducts) {
+			imageId = p.getArImage();
+			Image img = imageService.getById(imageId.get(0));
+			p.setString(img.getName());
+		}
+		model.addAttribute("listCategoryG",listCategoryG);
+		model.addAttribute("listCategoryP",listCategoryP);
+		model.addAttribute("listCategoryC",listCategoryC);
+		model.addAttribute("listproducts", listProducts);
+		return "tshoes.index";
+	}
 
 	@GetMapping("detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id, RedirectAttributes msg) {
@@ -194,7 +232,7 @@ public class TshoesController {
 			@RequestParam(required = false) Integer idSize, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 		HttpSession session = request.getSession();
-		User userLogin = (User) session.getAttribute("userLogin");
+		session.getAttribute("userLogin");
 		if (session.getAttribute("listCarts") != null) {
 			listCarts = (List<Cart>) session.getAttribute("listCarts");
 		} else {

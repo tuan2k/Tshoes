@@ -81,8 +81,14 @@
 		<div class="mid-header">
 			<div class="wrap">
 				<div class="mid-grid-left">
-					<form>
-						<input type="text" placeholder="What Are You Looking for?" />
+					<form action="${pageContext.request.contextPath}/search" method="post">
+						<select class="form-control" name="cat_id">
+									<c:forEach items="${listCategoryC}" var="cat">
+									<option value="${ cat.id }">${cat.name }</option>
+									</c:forEach>
+						</select>
+						<input type="text"  name ="catname"placeholder="What Are You Looking for?" />
+						<input type="submit" value="Search"/>
 					</form>
 				</div>
 				<div class="mid-grid-right">
@@ -111,7 +117,7 @@
 										<h4>${catp.name}</h4>
 										<ul>
 											<c:forEach items="${listCategoryC }" var="catc">
-											<li><a href="products.html">${catc.name }</a></li>
+											<li><a href="${pageContext.request.contextPath}/cat/${catc.id}">${catc.name }</a></li>
 											</c:forEach>
 										</ul>
 									</c:forEach>
