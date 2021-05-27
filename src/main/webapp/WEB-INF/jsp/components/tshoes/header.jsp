@@ -80,17 +80,17 @@
 		<!----start-mid-head---->
 		<div class="mid-header">
 			<div class="wrap">
+				<form action="${pageContext.request.contextPath}/search" method="post">
 				<div class="mid-grid-left">
-					<form action="${pageContext.request.contextPath}/search" method="post">
-						<select class="form-control" name="cat_id">
+						<select name="cat_id" style="display:inline-block;">
 									<c:forEach items="${listCategoryC}" var="cat">
 									<option value="${ cat.id }">${cat.name }</option>
 									</c:forEach>
 						</select>
-						<input type="text"  name ="catname"placeholder="What Are You Looking for?" />
-						<input type="submit" value="Search"/>
-					</form>
+						<input type="text"  name ="catname" placeholder="What Are You Looking for?" style="display:inline-block;" />
 				</div>
+				<input type="submit" value="Search" style="margin-top:65px;"/>
+				</form>
 				<div class="mid-grid-right">
 					<a class="logo" href="index.html"><span> </span></a>
 				</div>

@@ -496,7 +496,12 @@ public class TshoesController {
 	}
 	
 	@GetMapping("success")
-	public String sucess(Model model,HttpServletRequest request,RedirectAttributes msg) {
+	public String sucess(Model model,HttpServletRequest request,RedirectAttributes msg,@RequestParam Integer id) {
+		Order o = orderService.getById(id);
+		if (o !=null ) {
+			o.setStatus(1);
+			orderService.edit(o);
+		}
 		List<Category> listCategoryG = categoryService.getByGrand();
 		List<Category> listCategoryP = categoryService.getByParent();
 		List<Category> listCategoryC = categoryService.getByChild();

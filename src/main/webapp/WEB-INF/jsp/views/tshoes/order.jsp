@@ -25,13 +25,6 @@
 	<div class="container">
 		<div class="row new-account-login">
 			<div class="col-sm-6 col-lg-6 mb-3">
-				<div class="title-left">
-					<h3>Account Login</h3>
-				</div>
-				<h5>
-					<a data-toggle="collapse" href="#formLogin" role="button"
-						aria-expanded="false">Click here to Login</a>
-				</h5>
 				<form class="mt-3 collapse review-form-box" id="formLogin">
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -49,13 +42,6 @@
 				</form>
 			</div>
 			<div class="col-sm-6 col-lg-6 mb-3">
-				<div class="title-left">
-					<h3>Create New Account</h3>
-				</div>
-				<h5>
-					<a data-toggle="collapse" href="#formRegister" role="button"
-						aria-expanded="false">Click here to Register</a>
-				</h5>
 				<form class="mt-3 collapse review-form-box" id="formRegister">
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -260,14 +246,7 @@
 					<div style="width: 200px">
 						<div id="paypal-button"></div>
 					</div>
-					<button class="btn btn-success btn-md" onclick="return byHand()">Trả
-						sau</button>
-
-					<div class="col-12 d-flex shopping-box">
-						<a
-							href="${pageContext.request.contextPath }/review_payment?paymentId=${order.id}&payerId=${user.id}"
-							class="ml-auto btn hvr-hover">Place Order</a>
-					</div>
+					<a class="btn btn-success btn-md" href="${pageContext.request.contextPath}/index" >Trả sau</a>
 				</div>
 			</div>
 		</div>
@@ -311,9 +290,9 @@ $(document).ready(function () {
 		    onAuthorize: function(data, actions) {
 		      return actions.payment.execute().then(function() {
 		        // Show a confirmation message to the buyer
-				var r = confirm("Cảm ơn bạn  đã mua sản phẩm chủa Shop!\nChúng tôi sẽ giao hàng sớm cho bạn.\nVui lòng nhấn 'OK' để xác nhận đơn hàng.");
+				var r = confirm("Cảm ơn bạn  đã mua sản phẩm chủa TShoes!\nVui lòng nhấn 'OK' để xác nhận đơn hàng.");
 				if (r == true) {
-					window.location.href="http://localhost:8080/tshoes/success";
+					window.location.href="http://localhost:8080/tshoes/success?id=${order.id}";
 				} else {
 					window.location.href="http://localhost:8080/tshoes/checkout";
 				}

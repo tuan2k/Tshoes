@@ -115,12 +115,8 @@ public class AdminOrderController {
 			System.out.println("Có lỗi dữ liệu");
 			return "admin.order.edit";
 		}
-		Order c = null;
 		int save = 0;
-		c = orderService.validateUpdate(order);
-		if (c == null) {
-			save = orderService.edit(order);
-		}
+		save = orderService.edit(order);
 		if (save > 0) {
 			msg.addFlashAttribute("msg",messageSource.getMessage("msg.success", null, Locale.ENGLISH));
 			return "redirect:/admin/order/index";

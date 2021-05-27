@@ -272,7 +272,7 @@ public class ProductDAO {
 				while(rs.next()) {
 					Product c = new Product();
 					ArrayList<Integer> arrImage = new ArrayList<Integer>();
-					c.setId(rs.getInt("pid"));
+					c.setId(rs.getInt("id"));
 					c.setName(rs.getString("name"));
 					c.setPrice(rs.getInt("price"));
 					c.setNumber(rs.getInt("number"));

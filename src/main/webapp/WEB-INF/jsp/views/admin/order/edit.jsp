@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12 panel-info">
 			<div class="content-box-header panel-heading">
-				<div class="panel-title ">Sửa màu sắc</div>
+				<div class="panel-title ">Chỉnh sữa đơn hàng</div>
 			</div>
 			<br> <br>
 			<c:if test="${not empty msg }">
@@ -26,10 +26,10 @@
 											<form method="post" action="${pageContext.request.contextPath}/admin/order/edit">
 												<input name="id" type="hidden" value="${order.id }" />
 												 userid : <input name="user_id" value="${order.user_id }"
-													type="text" /><br />
+													type="text"  readonly /><br />
 													<hr>
 												 total : <input name="total" value="${order.total}"
-													type="text" /><br />
+													type="text" readonly /><br />
 													<hr>
 												 status : <input name="status" value="${order.status }"
 													type="text" /><br />
