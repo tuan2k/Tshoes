@@ -153,7 +153,7 @@ public class TshoesController {
 
 	@PostMapping("/search")
 	public String index(HttpServletRequest request, Model model,@RequestParam("cat_id") Integer cat_id,
-			@RequestParam("catname") String catname,@PathVariable(required = false) Integer page) {
+			@RequestParam("catname") String catname,@PathVariable(required = false) Integer page,RedirectAttributes msg) {
 		List<Integer> imageId = new ArrayList<Integer>();
 		List<Category> listCategoryG = categoryService.getByGrand();
 		List<Category> listCategoryP = categoryService.getByParent();
@@ -166,6 +166,10 @@ public class TshoesController {
 			page = 1 ;
 		}
 		List<Product> listProducts = productService.getBySearch(catname,cat_id,PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
+		if (listProducts.size() == 0) {
+			listProducts = productService.getByPagination(PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
+			msg.addFlashAttribute("msg",messageSource.getMessage("msg.search", null, Locale.ENGLISH));
+		}
 		for (Product p : listProducts) {
 			imageId = p.getArImage();
 			Image img = imageService.getById(imageId.get(0));

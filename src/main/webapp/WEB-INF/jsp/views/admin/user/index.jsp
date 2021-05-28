@@ -68,11 +68,11 @@
 										</c:if>
 										<c:if test="${ sessionScope.user.role_id == 2  && user.id != 1}">
 										<td class="center text-center"><a
-											href="edit/${ user.id }" title="" class="btn btn-primary">
+											href="${pageContext.request.contextPath}/admin/user/edit/${ user.id }" title="" class="btn btn-primary">
 												<span class="glyphicon glyphicon-pencil "></span> Sửa
 										</a>
 										<c:if test="${ user.id != sessionScope.user.id }">
-										<a href="delete/${ user.id }" title="" class="btn btn-danger">
+										<a href="${pageContext.request.contextPath}/admin/user/delete/${ user.id }" title="" class="btn btn-danger">
 												<span class="glyphicon glyphicon-trash"></span> Xóa
 										</a>
 										</c:if>
@@ -98,6 +98,88 @@
 						<p class="msg">Empty news</p>
 					</c:otherwise>
 				</c:choose>
+				
+				<!-- Pagination -->
+				<c:if test="${not empty search}">
+				<c:if test="${not empty totalPage }">
+				<nav class="text-center" aria-label="...">
+					<ul class="pagination">
+						<c:set value="0" var="k"></c:set>
+						<c:forEach begin="1" end="${totalPage}" var="i">
+						<c:if test="${ k == 0}">
+						<c:choose>
+						<c:when test="${currentPage > 1 }">
+						<li><a href="${pageContext.request.contextPath }/admin/user/${currentPage-1}/search?search=${search}" aria-label="Previous"><span
+								aria-hidden="true">«</span></a></li>
+						</c:when>
+						<c:otherwise>
+						<li><a href="${pageContext.request.contextPath }/admin/user/1/search?search=${search}" aria-label="Previous"><span
+								aria-hidden="true">«</span></a></li>
+						</c:otherwise>
+						</c:choose>
+						<c:set value="1" var="k"></c:set>
+						</c:if>
+						<li class="<c:if test="${ i == currentPage }">active</c:if>">
+						<a href="${pageContext.request.contextPath }/admin/user/${i}/search?search=${search}">${i } 
+						<span class="sr-only">(current)</span></a></li>
+						<c:if test="${ i == totalPage}">
+						<c:choose>
+						<c:when test="${currentPage < totalPage }">
+						<li><a href="${pageContext.request.contextPath }/admin/user/${currentPage+1}/search?search=${search}" aria-label="Next"><span
+								aria-hidden="true">»</span></a></li>
+						</c:when>
+						<c:otherwise>
+						<li><a href="${pageContext.request.contextPath }/admin/user/${totalPage}/search?search=${search}" aria-label="Next"><span
+								aria-hidden="true">»</span></a></li>
+						</c:otherwise>
+						</c:choose>
+						</c:if>
+						</c:forEach>
+					</ul>
+				</nav>
+				</c:if>
+				</c:if>
+				<c:if test="${empty search}">
+				<c:if test="${not empty totalPage }">
+				<nav class="text-center" aria-label="...">
+					<ul class="pagination">
+						<c:set value="0" var="k"></c:set>
+						<c:forEach begin="1" end="${totalPage}" var="i">
+						<c:if test="${ k == 0}">
+						<c:choose>
+						<c:when test="${currentPage > 1 }">
+						<li><a href="${pageContext.request.contextPath }/admin/user/index/${currentPage-1}" aria-label="Previous"><span
+								aria-hidden="true">«</span></a></li>
+						</c:when>
+						<c:otherwise>
+						<li><a href="${pageContext.request.contextPath }/admin/user/index/1" aria-label="Previous"><span
+								aria-hidden="true">«</span></a></li>
+						</c:otherwise>
+						</c:choose>
+						<c:set value="1" var="k"></c:set>
+						</c:if>
+						<li class="<c:if test="${ i == currentPage }">active</c:if>">
+						<a href="${pageContext.request.contextPath }/admin/user/index/${i}">${i } 
+						<span class="sr-only">(current)</span></a></li>
+						<c:if test="${ i == totalPage}">
+						<c:choose>
+						<c:when test="${currentPage < totalPage }">
+						<li><a href="${pageContext.request.contextPath }/admin/user/index/${currentPage+1}" aria-label="Next"><span
+								aria-hidden="true">»</span></a></li>
+						</c:when>
+						<c:otherwise>
+						<li><a href="${pageContext.request.contextPath }/admin/user/index/${totalPage}" aria-label="Next"><span
+								aria-hidden="true">»</span></a></li>
+						</c:otherwise>
+						</c:choose>
+						</c:if>
+						</c:forEach>
+						
+					</ul>
+				</nav>
+				</c:if>
+				</c:if>
+				<!-- /.pagination -->
 			</div>
 		</div>
 		<!-- /.row -->

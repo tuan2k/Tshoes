@@ -2,6 +2,7 @@ package edu.vinaenter.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -102,10 +103,29 @@ public class UserDAO {
 		},user.getId(), user.getUsername());
 	}
 
-	public List<User> getBySearch(String search) {
+	public List<User> getBySearch(String search,int offset,int current) {
 		String sql = "SELECT * FROM users where username like '%"+search+"%'"
-				+ " or fullname like '%"+search+"%'";
-		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
+				+ " or fullname like '%"+search+"%' limit ?,?";
+		return jdbcTemplate.query(sql, new ResultSetExtractor<List<User>>(){
+			@Override
+			public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				ArrayList<User> arrUsers = new ArrayList<User>();
+				while(rs.next()) {
+					User u = new User();
+					u.setId(rs.getInt("id"));
+					u.setUsername(rs.getString("username"));
+					u.setPassword(rs.getString("password"));
+					u.setFullname(rs.getString("fullname"));
+					u.setAddress(rs.getString("address"));
+					u.setPhone(rs.getString("phone"));
+					u.setGender(rs.getString("gender"));
+					u.setRole_id(rs.getInt("role_id"));
+					arrUsers.add(u);
+				}
+				return arrUsers;
+			}
+		},offset,current);
 	}
 
 	public User getByUsernameAndPassword(String username, String password) {
@@ -131,10 +151,45 @@ public class UserDAO {
 			}
 		},username,password);
 	}
+	
+	public List<User> getByPagination(int offset, int current){
+		String sql = "SELECT * FROM  users limit ?,?";
+		return jdbcTemplate.query(sql, new ResultSetExtractor<List<User>>(){
+			@Override
+			public List<User> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				ArrayList<User> arrUsers = new ArrayList<User>();
+				while(rs.next()) {
+					User u = new User();
+					u.setId(rs.getInt("id"));
+					u.setUsername(rs.getString("username"));
+					u.setPassword(rs.getString("password"));
+					u.setFullname(rs.getString("fullname"));
+					u.setAddress(rs.getString("address"));
+					u.setPhone(rs.getString("phone"));
+					u.setGender(rs.getString("gender"));
+					u.setRole_id(rs.getInt("role_id"));
+					arrUsers.add(u);
+				}
+				return arrUsers;
+			}
+		},offset,current);
+	}
 
 	public int saveSignup(User u) {
 		String sql = "insert into users(username,password,fullname,address,phone,role_id) values (?,?,?,?,?,?)";
 		return jdbcTemplate.update(sql, u.getUsername(),u.getPassword(),u.getFullname(),
 				u.getAddress(),u.getPhone(),u.getRole_id());
+	}
+
+	public int getTotalUser() {
+		String sql = "select count(*) as count from users";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+
+	public int totalRowSearch(String search) {
+		String sql = "select count(*) as count from users where username like '%"+search+"%' or fullname like '%"
+				+search+ "%'";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
 	}
 }

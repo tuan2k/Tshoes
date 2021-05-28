@@ -46,8 +46,8 @@ public class UserService implements ICRUDService<User> {
 		return userDAO.validateUpdate(user);
 	}
 
-	public List<User> getBySearch(String search) {
-		return userDAO.getBySearch(search);
+	public List<User> getBySearch(String search,int offset,int current) {
+		return userDAO.getBySearch(search,offset,current);
 	}
 
 	@Override
@@ -68,5 +68,19 @@ public class UserService implements ICRUDService<User> {
 
 	public int saveSignup(User u) {
 		return userDAO.saveSignup(u);
+	}
+
+	public int getTotalUser() {
+		// TODO Auto-generated method stub
+		return userDAO.getTotalUser();
+	}
+	
+	public List<User> getByPagination(int offset,int current) {
+		return userDAO.getByPagination(offset, current);
+	}
+
+	public int totalRowSearch(String search) {
+		// TODO Auto-generated method stub
+		return userDAO.totalRowSearch(search);
 	}
 }

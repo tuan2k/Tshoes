@@ -25,10 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.vinaenter.contant.GlobalContant;
 import edu.vinaenter.models.Role;
 import edu.vinaenter.models.User;
 import edu.vinaenter.services.RoleService;
 import edu.vinaenter.services.UserService;
+import edu.vinaenter.util.PageUtil;
 
 @Controller
 @RequestMapping("admin/user")
@@ -48,13 +50,21 @@ public class AdminUserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	@GetMapping("index")
-	public String index(Model model) {
+	@GetMapping({"index","/index/{page}"})
+	public String index(Model model, HttpServletRequest request,@PathVariable(required = false) Integer page) {
 		logger.info("this is log");
-		System.out.println("controller admin user index");
+		int totalPage = PageUtil.getTotalRow(userService.getTotalUser());
+		if ( page == null) {
+			page = 1;
+		}
+		if (page < 1 || page > totalPage) {
+			page = 1 ;
+		}
 		List<User> listusesrs = null;
-		listusesrs = userService.getAll();
+		listusesrs = userService.getByPagination(PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
 		model.addAttribute("listusers", listusesrs);
+		model.addAttribute("currentPage",page);
+		model.addAttribute("totalPage",totalPage);
 		return "admin.user.index";
 	}
 
@@ -150,13 +160,24 @@ public class AdminUserController {
 		return "admin.user.index";
 	}
 
-	@GetMapping("/search")
-	public String index(Model model, @RequestParam("search") String search, RedirectAttributes msg) {
+	@GetMapping({"/search","/{page}/search"})
+	public String index(Model model, @RequestParam("search") String search,@PathVariable(required = false) Integer page,
+			RedirectAttributes msg) {
 		List<User> listusers = new ArrayList<User>();
-		listusers = userService.getBySearch(search);
+		int totalPage = PageUtil.getTotalRow(userService.totalRowSearch(search));
+		if ( page == null) {
+			page = 1;
+		}
+		if (page < 1 || page > totalPage) {
+			page = 1 ;
+		}
+		listusers = userService.getBySearch(search,PageUtil.getOffset(page),GlobalContant.TOTAL_PAGE);
 		if (listusers.size() > 0) {
 			msg.addFlashAttribute("msg", messageSource.getMessage("msg.success", null, Locale.ENGLISH));
 			model.addAttribute("listusers", listusers);
+			model.addAttribute("search",search);
+			model.addAttribute("currentPage",page);
+			model.addAttribute("totalPage",totalPage);
 			return "admin.user.index";
 		}
 		msg.addFlashAttribute("msg", messageSource.getMessage("msg.empty", null, Locale.ENGLISH));

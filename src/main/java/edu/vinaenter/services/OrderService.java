@@ -63,4 +63,11 @@ public class OrderService implements ICRUDService<Order> {
 		return orderDAO.getByUserIdAndTotal(id,totalPrice);
 	}
 
+	public int getTotalOrder() {
+		return orderDAO.getTotalOrder();
+	}
+	
+	public List<Order> getByPagination(int offset,int current) {
+		return orderDAO.getByPagination(offset,current);
+	}
 }

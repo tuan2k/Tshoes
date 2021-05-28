@@ -162,4 +162,30 @@ public class OrderDAO {
 		},month,year);
 	}
 
+	public int getTotalOrder() {
+		String sql = "select count(*) as count from orders";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+
+	public List<Order> getByPagination(int offset, int current) {
+		String sql = "SELECT * FROM  orders limit ?,?";
+		return jdbcTemplate.query(sql, new ResultSetExtractor<List<Order>>(){
+			@Override
+			public List<Order> extractData(ResultSet rs) throws SQLException, DataAccessException {
+				// TODO Auto-generated method stub
+				ArrayList<Order> arrOrders = new ArrayList<Order>();
+				while(rs.next()) {
+					Order c = new Order();
+					c.setId(rs.getInt("id"));
+					c.setUser_id(rs.getInt("user_id"));
+					c.setTotal(rs.getInt("total"));
+					c.setDate(rs.getTimestamp("date"));
+					c.setStatus(rs.getInt("status"));
+					c.setNote(rs.getString("note"));
+					arrOrders.add(c);
+				}
+				return arrOrders;
+			}
+		},offset,current);
+	}
 }

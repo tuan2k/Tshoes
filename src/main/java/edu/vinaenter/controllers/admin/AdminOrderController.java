@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.vinaenter.contant.GlobalContant;
 import edu.vinaenter.models.Cart;
 import edu.vinaenter.models.Color;
 import edu.vinaenter.models.Order;
@@ -34,13 +34,11 @@ import edu.vinaenter.services.OrderService;
 import edu.vinaenter.services.ProductService;
 import edu.vinaenter.services.SizeService;
 import edu.vinaenter.services.UserService;
+import edu.vinaenter.util.PageUtil;
 
 @Controller
 @RequestMapping("admin/order")
 public class AdminOrderController {
-	
-	private static final Logger logger = 
-			LoggerFactory.getLogger(AdminOrderController.class);
 	
 	@Resource
 	MessageSource messageSource;
@@ -63,15 +61,24 @@ public class AdminOrderController {
 	@Autowired
 	private ProductService productService;
 	
-	@GetMapping("index")
-	public String index(Model model) {
+	@GetMapping({"index","/index/{page}"})
+	public String index(Model model, HttpServletRequest request,@PathVariable(required = false) Integer page) {
 		List<User> listUsers = new ArrayList<User>();
 		List<Order> listorders = null;
-		listorders = orderService.getAll();
+		int totalPage = PageUtil.getTotalRow(orderService.getTotalOrder());
+		if ( page == null) {
+			page = 1;
+		}
+		if (page < 1 || page > totalPage) {
+			page = 1 ;
+		}
+		listorders = orderService.getByPagination(PageUtil.getOffset(page), GlobalContant.TOTAL_PAGE);
 		for (Order o : listorders) {
 			listUsers.add(userService.getById(o.getUser_id()));
 		}
 		model.addAttribute("listusers",listUsers);
+		model.addAttribute("currentPage",page);
+		model.addAttribute("totalPage",totalPage);
 		model.addAttribute("listorders", listorders);
 		return "admin.order.index";
 	}

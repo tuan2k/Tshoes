@@ -254,8 +254,8 @@ public class AdminProductController {
 		int totalPage = PageUtil.getTotalRow(productService.totalRowSearch(search));
 		List<Product> listproducts = new ArrayList<Product>();
 		listproducts = productService.getBySearch(search,PageUtil.getOffset(page),GlobalContant.TOTAL_PAGE);
-		model.addAttribute("search",search);
 		model.addAttribute("listproducts", listproducts);
+		model.addAttribute("search",search);
 		model.addAttribute("currentPage",page);
 		model.addAttribute("totalPage",totalPage);
 		return "admin.product.index";
