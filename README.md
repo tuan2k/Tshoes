@@ -14,5 +14,6 @@
 + Phân quyền
 + Phân trang, tìm kiếm phân trang,...
 + Upload nhiều hình ảnh.
++ Sử dụng apache-tile để tách ghép giao diện.
 + Tích hợp canvasjs để thống kê đơn hàng, doanh thu và in ra.
 + ...
