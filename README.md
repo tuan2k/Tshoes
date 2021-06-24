@@ -1,4 +1,5 @@
-# Tshoes
+# Tshoes 
+# commercial project use spring mvc framework
 - Thành viên: 1
 - Nội dung : Đây là website thương mại bán giày
 - Framework : Spring MVC
